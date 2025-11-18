@@ -7007,17 +7007,27 @@
     },
     {
       "availability": {
-        "stack": {
+        "serverless": {
           "stability": "stable",
-          "visibility": "public"
+          "visibility": "private"
+        },
+        "stack": {
+          "since": "8.19.0",
+          "stability": "stable"
         }
       },
-      "description": "Deletes the data stream options of the selected data streams.",
+      "description": "Delete data stream options.\nRemoves the data stream options from a data stream.",
       "docUrl": "https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html",
       "name": "indices.delete_data_stream_options",
-      "request": null,
+      "request": {
+        "name": "Request",
+        "namespace": "indices.delete_data_stream_options"
+      },
       "requestBodyRequired": false,
-      "response": null,
+      "response": {
+        "name": "Response",
+        "namespace": "indices.delete_data_stream_options"
+      },
       "responseMediaType": [
         "application/json"
       ],
@@ -7735,17 +7745,28 @@
     },
     {
       "availability": {
-        "stack": {
+        "serverless": {
           "stability": "stable",
           "visibility": "public"
+        },
+        "stack": {
+          "since": "8.19.0",
+          "stability": "stable"
         }
       },
-      "description": "Returns the data stream options of the selected data streams.",
+      "description": "Get data stream options.\n\nGet the data stream options configuration of one or more data streams.",
+      "docTag": "data stream",
       "docUrl": "https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html",
       "name": "indices.get_data_stream_options",
-      "request": null,
+      "request": {
+        "name": "Request",
+        "namespace": "indices.get_data_stream_options"
+      },
       "requestBodyRequired": false,
-      "response": null,
+      "response": {
+        "name": "Response",
+        "namespace": "indices.get_data_stream_options"
+      },
       "responseMediaType": [
         "application/json"
       ],
@@ -8344,20 +8365,31 @@
     },
     {
       "availability": {
-        "stack": {
+        "serverless": {
           "stability": "stable",
           "visibility": "public"
+        },
+        "stack": {
+          "since": "8.19.0",
+          "stability": "stable"
         }
       },
-      "description": "Updates the data stream options of the selected data streams.",
+      "description": "Update data stream options.\nUpdate the data stream options of the specified data streams.",
+      "docTag": "data stream",
       "docUrl": "https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html",
       "name": "indices.put_data_stream_options",
-      "request": null,
+      "request": {
+        "name": "Request",
+        "namespace": "indices.put_data_stream_options"
+      },
       "requestBodyRequired": false,
       "requestMediaType": [
         "application/json"
       ],
-      "response": null,
+      "response": {
+        "name": "Response",
+        "namespace": "indices.put_data_stream_options"
+      },
       "responseMediaType": [
         "application/json"
       ],
@@ -8497,11 +8529,11 @@
           "stability": "stable"
         }
       },
-      "description": "Update index settings.\nChanges dynamic index settings in real time.\nFor data streams, index setting changes are applied to all backing indices by default.\n\nTo revert a setting to the default value, use a null value.\nThe list of per-index settings that can be updated dynamically on live indices can be found in index module documentation.\nTo preserve existing settings from being updated, set the `preserve_existing` parameter to `true`.\n\nNOTE: You can only define new analyzers on closed indices.\nTo add an analyzer, you must close the index, define the analyzer, and reopen the index.\nYou cannot close the write index of a data stream.\nTo update the analyzer for a data stream's write index and future backing indices, update the analyzer in the index template used by the stream.\nThen roll over the data stream to apply the new analyzer to the stream's write index and future backing indices.\nThis affects searches and any new data added to the stream after the rollover.\nHowever, it does not affect the data stream's backing indices or their existing data.\nTo change the analyzer for existing backing indices, you must create a new data stream and reindex your data into it.",
+      "description": "Update index settings.\nChanges dynamic index settings in real time.\nFor data streams, index setting changes are applied to all backing indices by default.\n\nTo revert a setting to the default value, use a null value.\nThe list of per-index settings that can be updated dynamically on live indices can be found in index settings documentation.\nTo preserve existing settings from being updated, set the `preserve_existing` parameter to `true`.\n\n There are multiple valid ways to represent index settings in the request body. You can specify only the setting, for example:\n\n```\n{\n  \"number_of_replicas\": 1\n}\n```\n\nOr you can use an `index` setting object:\n```\n{\n  \"index\": {\n    \"number_of_replicas\": 1\n  }\n}\n```\n\nOr you can use dot annotation:\n```\n{\n  \"index.number_of_replicas\": 1\n}\n```\n\nOr you can embed any of the aforementioned options in a `settings` object. For example:\n\n```\n{\n  \"settings\": {\n    \"index\": {\n      \"number_of_replicas\": 1\n    }\n  }\n}\n```\n\nNOTE: You can only define new analyzers on closed indices.\nTo add an analyzer, you must close the index, define the analyzer, and reopen the index.\nYou cannot close the write index of a data stream.\nTo update the analyzer for a data stream's write index and future backing indices, update the analyzer in the index template used by the stream.\nThen roll over the data stream to apply the new analyzer to the stream's write index and future backing indices.\nThis affects searches and any new data added to the stream after the rollover.\nHowever, it does not affect the data stream's backing indices or their existing data.\nTo change the analyzer for existing backing indices, you must create a new data stream and reindex your data into it.",
       "docId": "indices-update-settings",
       "docUrl": "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-put-settings",
-      "extDocId": "index-modules",
-      "extDocUrl": "https://www.elastic.co/docs/reference/elasticsearch/index-settings/index-modules",
+      "extDocId": "index-settings",
+      "extDocUrl": "https://www.elastic.co/docs/reference/elasticsearch/index-settings/",
       "name": "indices.put_settings",
       "privileges": {
         "index": [
@@ -9273,7 +9305,7 @@
           "visibility": "public"
         }
       },
-      "description": "Perform chat completion inference\n\nThe chat completion inference API enables real-time responses for chat completion tasks by delivering answers incrementally, reducing response times during computation. \nIt only works with the `chat_completion` task type for `openai` and `elastic` inference services.\n\nIMPORTANT: The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Azure, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face.\nFor built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models. However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs.\n\nNOTE: The `chat_completion` task type is only available within the _stream API and only supports streaming.\nThe Chat completion inference API and the Stream inference API differ in their response structure and capabilities.\nThe Chat completion inference API provides more comprehensive customization options through more fields and function calling support.\nIf you use the `openai` service or the `elastic` service, use the Chat completion inference API.",
+      "description": "Perform chat completion inference\n\nThe chat completion inference API enables real-time responses for chat completion tasks by delivering answers incrementally, reducing response times during computation. \nIt only works with the `chat_completion` task type for `openai`, `elastic` and `googlevertexai` inference services.\n\nIMPORTANT: The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Azure, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face.\nFor built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models. However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs.\n\nNOTE: The `chat_completion` task type is only available within the _stream API and only supports streaming.\nThe Chat completion inference API and the Stream inference API differ in their response structure and capabilities.\nThe Chat completion inference API provides more comprehensive customization options through more fields and function calling support.\nIf you use the `openai` service or the `elastic` service, use the Chat completion inference API.",
       "docId": "inference-api-chat-completion",
       "docUrl": "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-unified-inference",
       "name": "inference.chat_completion_unified",
@@ -112611,7 +112643,7 @@
           }
         }
       ],
-      "specLocation": "cluster/_types/ComponentTemplate.ts#L27-L30"
+      "specLocation": "cluster/_types/ComponentTemplate.ts#L28-L31"
     },
     {
       "kind": "interface",
@@ -112667,7 +112699,7 @@
           }
         }
       ],
-      "specLocation": "cluster/_types/ComponentTemplate.ts#L32-L41"
+      "specLocation": "cluster/_types/ComponentTemplate.ts#L33-L42"
     },
     {
       "kind": "interface",
@@ -112774,9 +112806,41 @@
               "namespace": "indices._types"
             }
           }
+        },
+        {
+          "availability": {
+            "serverless": {
+              "stability": "stable"
+            },
+            "stack": {
+              "since": "8.19.0",
+              "stability": "stable"
+            }
+          },
+          "name": "data_stream_options",
+          "required": false,
+          "type": {
+            "kind": "union_of",
+            "items": [
+              {
+                "kind": "instance_of",
+                "type": {
+                  "name": "DataStreamOptionsTemplate",
+                  "namespace": "indices._types"
+                }
+              },
+              {
+                "kind": "instance_of",
+                "type": {
+                  "name": "null",
+                  "namespace": "_builtins"
+                }
+              }
+            ]
+          }
         }
       ],
-      "specLocation": "cluster/_types/ComponentTemplate.ts#L43-L55"
+      "specLocation": "cluster/_types/ComponentTemplate.ts#L44-L61"
     },
     {
       "kind": "interface",
@@ -133941,6 +134005,102 @@
     },
     {
       "kind": "interface",
+      "description": "Data stream failure store contains the configuration of the failure store for a given data stream.",
+      "name": {
+        "name": "DataStreamFailureStore",
+        "namespace": "indices._types"
+      },
+      "properties": [
+        {
+          "description": "If defined, it turns the failure store on/off (`true`/`false`) for this data stream. A data stream failure store\nthat's disabled (enabled: `false`) will redirect no new failed indices to the failure store; however, it will\nnot remove any existing data from the failure store.",
+          "name": "enabled",
+          "required": false,
+          "serverDefault": true,
+          "type": {
+            "kind": "instance_of",
+            "type": {
+              "name": "boolean",
+              "namespace": "_builtins"
+            }
+          }
+        },
+        {
+          "description": "If defined, it specifies the lifecycle configuration for the failure store of this data stream.",
+          "name": "lifecycle",
+          "required": false,
+          "type": {
+            "kind": "instance_of",
+            "type": {
+              "name": "FailureStoreLifecycle",
+              "namespace": "indices._types"
+            }
+          }
+        }
+      ],
+      "specLocation": "indices/_types/DataStreamFailureStore.ts#L22-L37"
+    },
+    {
+      "kind": "interface",
+      "description": "Template equivalent of DataStreamFailureStore that allows nullable values.",
+      "name": {
+        "name": "DataStreamFailureStoreTemplate",
+        "namespace": "indices._types"
+      },
+      "properties": [
+        {
+          "description": "If defined, it turns the failure store on/off (`true`/`false`) for this data stream. A data stream failure store\nthat's disabled (enabled: `false`) will redirect no new failed indices to the failure store; however, it will\nnot remove any existing data from the failure store.",
+          "name": "enabled",
+          "required": false,
+          "serverDefault": "true",
+          "type": {
+            "kind": "union_of",
+            "items": [
+              {
+                "kind": "instance_of",
+                "type": {
+                  "name": "boolean",
+                  "namespace": "_builtins"
+                }
+              },
+              {
+                "kind": "instance_of",
+                "type": {
+                  "name": "null",
+                  "namespace": "_builtins"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "description": "If defined, it specifies the lifecycle configuration for the failure store of this data stream.",
+          "name": "lifecycle",
+          "required": false,
+          "type": {
+            "kind": "union_of",
+            "items": [
+              {
+                "kind": "instance_of",
+                "type": {
+                  "name": "FailureStoreLifecycleTemplate",
+                  "namespace": "indices._types"
+                }
+              },
+              {
+                "kind": "instance_of",
+                "type": {
+                  "name": "null",
+                  "namespace": "_builtins"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "specLocation": "indices/_types/DataStreamFailureStore.ts#L39-L54"
+    },
+    {
+      "kind": "interface",
       "name": {
         "name": "DataStreamIndex",
         "namespace": "indices._types"
@@ -134245,6 +134405,63 @@
     },
     {
       "kind": "interface",
+      "description": "Data stream options contain the configuration of data stream level features for a given data stream, for example,\nthe failure store configuration.",
+      "name": {
+        "name": "DataStreamOptions",
+        "namespace": "indices._types"
+      },
+      "properties": [
+        {
+          "description": "If defined, it specifies configuration for the failure store of this data stream.",
+          "name": "failure_store",
+          "required": false,
+          "type": {
+            "kind": "instance_of",
+            "type": {
+              "name": "DataStreamFailureStore",
+              "namespace": "indices._types"
+            }
+          }
+        }
+      ],
+      "specLocation": "indices/_types/DataStreamOptions.ts#L25-L34"
+    },
+    {
+      "kind": "interface",
+      "description": "Data stream options template contains the same information as DataStreamOptions but allows them to be set explicitly to null.",
+      "name": {
+        "name": "DataStreamOptionsTemplate",
+        "namespace": "indices._types"
+      },
+      "properties": [
+        {
+          "name": "failure_store",
+          "required": false,
+          "type": {
+            "kind": "union_of",
+            "items": [
+              {
+                "kind": "instance_of",
+                "type": {
+                  "name": "DataStreamFailureStoreTemplate",
+                  "namespace": "indices._types"
+                }
+              },
+              {
+                "kind": "instance_of",
+                "type": {
+                  "name": "null",
+                  "namespace": "_builtins"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "specLocation": "indices/_types/DataStreamOptions.ts#L36-L41"
+    },
+    {
+      "kind": "interface",
       "name": {
         "name": "DataStreamTimestampField",
         "namespace": "indices._types"
@@ -134398,6 +134615,90 @@
         }
       ],
       "specLocation": "indices/_types/DataStream.ts#L47-L51"
+    },
+    {
+      "kind": "interface",
+      "description": "The failure store lifecycle configures the data stream lifecycle configuration for failure indices.",
+      "name": {
+        "name": "FailureStoreLifecycle",
+        "namespace": "indices._types"
+      },
+      "properties": [
+        {
+          "description": "If defined, every document added to this data stream will be stored at least for this time frame.\nAny time after this duration the document could be deleted.\nWhen empty, every document in this data stream will be stored indefinitely.",
+          "name": "data_retention",
+          "required": false,
+          "type": {
+            "kind": "instance_of",
+            "type": {
+              "name": "Duration",
+              "namespace": "_types"
+            }
+          }
+        },
+        {
+          "description": "If defined, it turns data stream lifecycle on/off (`true`/`false`) for this data stream. A data stream lifecycle\nthat's disabled (enabled: `false`) will have no effect on the data stream.",
+          "name": "enabled",
+          "required": false,
+          "serverDefault": true,
+          "type": {
+            "kind": "instance_of",
+            "type": {
+              "name": "boolean",
+              "namespace": "_builtins"
+            }
+          }
+        }
+      ],
+      "specLocation": "indices/_types/DataStreamFailureStore.ts#L56-L72"
+    },
+    {
+      "kind": "interface",
+      "description": "Template equivalent of FailureStoreLifecycle that allows nullable values.",
+      "name": {
+        "name": "FailureStoreLifecycleTemplate",
+        "namespace": "indices._types"
+      },
+      "properties": [
+        {
+          "description": "If defined, every document added to this data stream will be stored at least for this time frame.\nAny time after this duration the document could be deleted.\nWhen empty, every document in this data stream will be stored indefinitely.",
+          "name": "data_retention",
+          "required": false,
+          "type": {
+            "kind": "union_of",
+            "items": [
+              {
+                "kind": "instance_of",
+                "type": {
+                  "name": "Duration",
+                  "namespace": "_types"
+                }
+              },
+              {
+                "kind": "instance_of",
+                "type": {
+                  "name": "null",
+                  "namespace": "_builtins"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "description": "If defined, it turns data stream lifecycle on/off (`true`/`false`) for this data stream. A data stream lifecycle\nthat's disabled (enabled: `false`) will have no effect on the data stream.",
+          "name": "enabled",
+          "required": false,
+          "serverDefault": true,
+          "type": {
+            "kind": "instance_of",
+            "type": {
+              "name": "boolean",
+              "namespace": "_builtins"
+            }
+          }
+        }
+      ],
+      "specLocation": "indices/_types/DataStreamFailureStore.ts#L74-L90"
     },
     {
       "kind": "interface",
@@ -134961,6 +135262,8 @@
       ],
       "docId": "index-modules-settings",
       "docUrl": "https://www.elastic.co/docs/reference/elasticsearch/index-settings/index-modules",
+      "extDocId": "index-settings",
+      "extDocUrl": "https://www.elastic.co/docs/reference/elasticsearch/index-settings/",
       "name": {
         "name": "IndexSettings",
         "namespace": "indices._types"
@@ -136285,7 +136588,7 @@
           }
         }
       ],
-      "specLocation": "indices/_types/IndexTemplate.ts#L28-L81"
+      "specLocation": "indices/_types/IndexTemplate.ts#L29-L82"
     },
     {
       "kind": "interface",
@@ -136321,7 +136624,7 @@
           }
         }
       ],
-      "specLocation": "indices/_types/IndexTemplate.ts#L83-L94"
+      "specLocation": "indices/_types/IndexTemplate.ts#L84-L95"
     },
     {
       "kind": "interface",
@@ -136396,9 +136699,41 @@
               "namespace": "indices._types"
             }
           }
+        },
+        {
+          "availability": {
+            "serverless": {
+              "stability": "stable"
+            },
+            "stack": {
+              "since": "8.19.0",
+              "stability": "stable"
+            }
+          },
+          "name": "data_stream_options",
+          "required": false,
+          "type": {
+            "kind": "union_of",
+            "items": [
+              {
+                "kind": "instance_of",
+                "type": {
+                  "name": "DataStreamOptionsTemplate",
+                  "namespace": "indices._types"
+                }
+              },
+              {
+                "kind": "instance_of",
+                "type": {
+                  "name": "null",
+                  "namespace": "_builtins"
+                }
+              }
+            ]
+          }
         }
       ],
-      "specLocation": "indices/_types/IndexTemplate.ts#L96-L118"
+      "specLocation": "indices/_types/IndexTemplate.ts#L97-L124"
     },
     {
       "kind": "interface",
@@ -140685,6 +141020,104 @@
       "body": {
         "kind": "no_body"
       },
+      "description": "Delete data stream options.\nRemoves the data stream options from a data stream.",
+      "inherits": {
+        "type": {
+          "name": "RequestBase",
+          "namespace": "_types"
+        }
+      },
+      "name": {
+        "name": "Request",
+        "namespace": "indices.delete_data_stream_options"
+      },
+      "path": [
+        {
+          "description": "A comma-separated list of data streams of which the data stream options will be deleted; use `*` to get all data streams",
+          "name": "name",
+          "required": true,
+          "type": {
+            "kind": "instance_of",
+            "type": {
+              "name": "DataStreamNames",
+              "namespace": "_types"
+            }
+          }
+        }
+      ],
+      "query": [
+        {
+          "description": "Whether wildcard expressions should get expanded to open or closed indices (default: open)",
+          "name": "expand_wildcards",
+          "required": false,
+          "type": {
+            "kind": "instance_of",
+            "type": {
+              "name": "ExpandWildcards",
+              "namespace": "_types"
+            }
+          }
+        },
+        {
+          "description": "Specify timeout for connection to master",
+          "name": "master_timeout",
+          "required": false,
+          "type": {
+            "kind": "instance_of",
+            "type": {
+              "name": "Duration",
+              "namespace": "_types"
+            }
+          }
+        },
+        {
+          "description": "Explicit timestamp for the document",
+          "name": "timeout",
+          "required": false,
+          "type": {
+            "kind": "instance_of",
+            "type": {
+              "name": "Duration",
+              "namespace": "_types"
+            }
+          }
+        }
+      ],
+      "specLocation": "indices/delete_data_stream_options/IndicesDeleteDataStreamOptionsRequest.ts#L24-L46"
+    },
+    {
+      "kind": "response",
+      "body": {
+        "kind": "value",
+        "codegenName": "result",
+        "value": {
+          "kind": "instance_of",
+          "type": {
+            "name": "AcknowledgedResponseBase",
+            "namespace": "_types"
+          }
+        }
+      },
+      "examples": {
+        "IndicesDeleteDataStreamOptionsResponseExample1": {
+          "description": "A successful response for deleting data stream options.",
+          "value": "{\n  \"acknowledged\": true\n}"
+        }
+      },
+      "name": {
+        "name": "Response",
+        "namespace": "indices.delete_data_stream_options"
+      },
+      "specLocation": "indices/delete_data_stream_options/IndicesDeleteDataStreamOptionsResponse.ts#L22-L25"
+    },
+    {
+      "kind": "request",
+      "attachedBehaviors": [
+        "CommonQueryParameters"
+      ],
+      "body": {
+        "kind": "no_body"
+      },
       "description": "Delete an index template.\nThe provided <index-template> may contain multiple template names separated by a comma. If multiple template\nnames are specified then there is no wildcard support and the provided names should match completely with\nexisting templates.",
       "inherits": {
         "type": {
@@ -143001,7 +143434,7 @@
       },
       "examples": {
         "IndicesGetDataLifecycleResponseExample1": {
-          "description": "A successful response from `GET _lifecycle/stats?human&pretty`.",
+          "description": "A successful response from `GET /_data_stream/{name}/_lifecycle?human&pretty`.",
           "value": "{\n  \"data_streams\": [\n    {\n      \"name\": \"my-data-stream-1\",\n      \"lifecycle\": {\n        \"enabled\": true,\n        \"data_retention\": \"7d\"\n      }\n    },\n    {\n      \"name\": \"my-data-stream-2\",\n      \"lifecycle\": {\n        \"enabled\": true,\n        \"data_retention\": \"7d\"\n      }\n    }\n  ]\n}"
         }
       },
@@ -143298,6 +143731,128 @@
         "namespace": "indices.get_data_stream"
       },
       "specLocation": "indices/get_data_stream/IndicesGetDataStreamResponse.ts#L22-L24"
+    },
+    {
+      "kind": "interface",
+      "name": {
+        "name": "DataStreamWithOptions",
+        "namespace": "indices.get_data_stream_options"
+      },
+      "properties": [
+        {
+          "name": "name",
+          "required": true,
+          "type": {
+            "kind": "instance_of",
+            "type": {
+              "name": "DataStreamName",
+              "namespace": "_types"
+            }
+          }
+        },
+        {
+          "name": "options",
+          "required": false,
+          "type": {
+            "kind": "instance_of",
+            "type": {
+              "name": "DataStreamOptions",
+              "namespace": "indices._types"
+            }
+          }
+        }
+      ],
+      "specLocation": "indices/get_data_stream_options/IndicesGetDataStreamOptionsResponse.ts#L27-L30"
+    },
+    {
+      "kind": "request",
+      "attachedBehaviors": [
+        "CommonQueryParameters"
+      ],
+      "body": {
+        "kind": "no_body"
+      },
+      "description": "Get data stream options.\n\nGet the data stream options configuration of one or more data streams.",
+      "inherits": {
+        "type": {
+          "name": "RequestBase",
+          "namespace": "_types"
+        }
+      },
+      "name": {
+        "name": "Request",
+        "namespace": "indices.get_data_stream_options"
+      },
+      "path": [
+        {
+          "description": "Comma-separated list of data streams to limit the request.\nSupports wildcards (`*`).\nTo target all data streams, omit this parameter or use `*` or `_all`.",
+          "name": "name",
+          "required": true,
+          "type": {
+            "kind": "instance_of",
+            "type": {
+              "name": "DataStreamNames",
+              "namespace": "_types"
+            }
+          }
+        }
+      ],
+      "query": [
+        {
+          "description": "Type of data stream that wildcard patterns can match.\nSupports comma-separated values, such as `open,hidden`.\nValid values are: `all`, `open`, `closed`, `hidden`, `none`.",
+          "name": "expand_wildcards",
+          "required": false,
+          "serverDefault": "open",
+          "type": {
+            "kind": "instance_of",
+            "type": {
+              "name": "ExpandWildcards",
+              "namespace": "_types"
+            }
+          }
+        },
+        {
+          "description": "Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error.",
+          "name": "master_timeout",
+          "required": false,
+          "serverDefault": "30s",
+          "type": {
+            "kind": "instance_of",
+            "type": {
+              "name": "Duration",
+              "namespace": "_types"
+            }
+          }
+        }
+      ],
+      "specLocation": "indices/get_data_stream_options/IndicesGetDataStreamOptionsRequest.ts#L24-L62"
+    },
+    {
+      "kind": "response",
+      "body": {
+        "kind": "properties",
+        "properties": [
+          {
+            "name": "data_streams",
+            "required": true,
+            "type": {
+              "kind": "array_of",
+              "value": {
+                "kind": "instance_of",
+                "type": {
+                  "name": "DataStreamWithOptions",
+                  "namespace": "indices.get_data_stream_options"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "name": {
+        "name": "Response",
+        "namespace": "indices.get_data_stream_options"
+      },
+      "specLocation": "indices/get_data_stream_options/IndicesGetDataStreamOptionsResponse.ts#L23-L25"
     },
     {
       "kind": "request",
@@ -145201,6 +145756,115 @@
       "specLocation": "indices/put_data_lifecycle/IndicesPutDataLifecycleResponse.ts#L22-L25"
     },
     {
+      "kind": "request",
+      "attachedBehaviors": [
+        "CommonQueryParameters"
+      ],
+      "body": {
+        "kind": "properties",
+        "properties": [
+          {
+            "description": "If defined, it will update the failure store configuration of every data stream resolved by the name expression.",
+            "name": "failure_store",
+            "required": false,
+            "type": {
+              "kind": "instance_of",
+              "type": {
+                "name": "DataStreamFailureStore",
+                "namespace": "indices._types"
+              }
+            }
+          }
+        ]
+      },
+      "description": "Update data stream options.\nUpdate the data stream options of the specified data streams.",
+      "inherits": {
+        "type": {
+          "name": "RequestBase",
+          "namespace": "_types"
+        }
+      },
+      "name": {
+        "name": "Request",
+        "namespace": "indices.put_data_stream_options"
+      },
+      "path": [
+        {
+          "description": "Comma-separated list of data streams used to limit the request.\nSupports wildcards (`*`).\nTo target all data streams use `*` or `_all`.",
+          "name": "name",
+          "required": true,
+          "type": {
+            "kind": "instance_of",
+            "type": {
+              "name": "DataStreamNames",
+              "namespace": "_types"
+            }
+          }
+        }
+      ],
+      "query": [
+        {
+          "description": "Type of data stream that wildcard patterns can match.\nSupports comma-separated values, such as `open,hidden`.\nValid values are: `all`, `hidden`, `open`, `closed`, `none`.",
+          "name": "expand_wildcards",
+          "required": false,
+          "serverDefault": "open",
+          "type": {
+            "kind": "instance_of",
+            "type": {
+              "name": "ExpandWildcards",
+              "namespace": "_types"
+            }
+          }
+        },
+        {
+          "description": "Period to wait for a connection to the master node. If no response is\nreceived before the timeout expires, the request fails and returns an\nerror.",
+          "name": "master_timeout",
+          "required": false,
+          "serverDefault": "30s",
+          "type": {
+            "kind": "instance_of",
+            "type": {
+              "name": "Duration",
+              "namespace": "_types"
+            }
+          }
+        },
+        {
+          "description": "Period to wait for a response.\nIf no response is received before the timeout expires, the request fails and returns an error.",
+          "name": "timeout",
+          "required": false,
+          "serverDefault": "30s",
+          "type": {
+            "kind": "instance_of",
+            "type": {
+              "name": "Duration",
+              "namespace": "_types"
+            }
+          }
+        }
+      ],
+      "specLocation": "indices/put_data_stream_options/IndicesPutDataStreamOptionsRequest.ts#L25-L80"
+    },
+    {
+      "kind": "response",
+      "body": {
+        "kind": "value",
+        "codegenName": "result",
+        "value": {
+          "kind": "instance_of",
+          "type": {
+            "name": "AcknowledgedResponseBase",
+            "namespace": "_types"
+          }
+        }
+      },
+      "name": {
+        "name": "Response",
+        "namespace": "indices.put_data_stream_options"
+      },
+      "specLocation": "indices/put_data_stream_options/IndicesPutDataStreamOptionsResponse.ts#L22-L25"
+    },
+    {
       "kind": "interface",
       "name": {
         "name": "IndexTemplateMapping",
@@ -145832,7 +146496,7 @@
           }
         }
       },
-      "description": "Update index settings.\nChanges dynamic index settings in real time.\nFor data streams, index setting changes are applied to all backing indices by default.\n\nTo revert a setting to the default value, use a null value.\nThe list of per-index settings that can be updated dynamically on live indices can be found in index module documentation.\nTo preserve existing settings from being updated, set the `preserve_existing` parameter to `true`.\n\nNOTE: You can only define new analyzers on closed indices.\nTo add an analyzer, you must close the index, define the analyzer, and reopen the index.\nYou cannot close the write index of a data stream.\nTo update the analyzer for a data stream's write index and future backing indices, update the analyzer in the index template used by the stream.\nThen roll over the data stream to apply the new analyzer to the stream's write index and future backing indices.\nThis affects searches and any new data added to the stream after the rollover.\nHowever, it does not affect the data stream's backing indices or their existing data.\nTo change the analyzer for existing backing indices, you must create a new data stream and reindex your data into it.",
+      "description": "Update index settings.\nChanges dynamic index settings in real time.\nFor data streams, index setting changes are applied to all backing indices by default.\n\nTo revert a setting to the default value, use a null value.\nThe list of per-index settings that can be updated dynamically on live indices can be found in index settings documentation.\nTo preserve existing settings from being updated, set the `preserve_existing` parameter to `true`.\n\n There are multiple valid ways to represent index settings in the request body. You can specify only the setting, for example:\n\n```\n{\n  \"number_of_replicas\": 1\n}\n```\n\nOr you can use an `index` setting object:\n```\n{\n  \"index\": {\n    \"number_of_replicas\": 1\n  }\n}\n```\n\nOr you can use dot annotation:\n```\n{\n  \"index.number_of_replicas\": 1\n}\n```\n\nOr you can embed any of the aforementioned options in a `settings` object. For example:\n\n```\n{\n  \"settings\": {\n    \"index\": {\n      \"number_of_replicas\": 1\n    }\n  }\n}\n```\n\nNOTE: You can only define new analyzers on closed indices.\nTo add an analyzer, you must close the index, define the analyzer, and reopen the index.\nYou cannot close the write index of a data stream.\nTo update the analyzer for a data stream's write index and future backing indices, update the analyzer in the index template used by the stream.\nThen roll over the data stream to apply the new analyzer to the stream's write index and future backing indices.\nThis affects searches and any new data added to the stream after the rollover.\nHowever, it does not affect the data stream's backing indices or their existing data.\nTo change the analyzer for existing backing indices, you must create a new data stream and reindex your data into it.",
       "examples": {
         "IndicesPutSettingsRequestExample1": {
           "summary": "Change a dynamic index setting",
@@ -145979,7 +146643,7 @@
           }
         }
       ],
-      "specLocation": "indices/put_settings/IndicesPutSettingsRequest.ts#L25-L125"
+      "specLocation": "indices/put_settings/IndicesPutSettingsRequest.ts#L25-L162"
     },
     {
       "kind": "response",
@@ -154233,7 +154897,7 @@
         "name": "GoogleVertexAIServiceType",
         "namespace": "inference._types"
       },
-      "specLocation": "inference/_types/CommonTypes.ts#L871-L873"
+      "specLocation": "inference/_types/CommonTypes.ts#L873-L875"
     },
     {
       "kind": "interface",
@@ -154277,13 +154941,19 @@
         },
         {
           "name": "text_embedding"
+        },
+        {
+          "name": "completion"
+        },
+        {
+          "name": "chat_completion"
         }
       ],
       "name": {
         "name": "GoogleVertexAITaskType",
         "namespace": "inference._types"
       },
-      "specLocation": "inference/_types/CommonTypes.ts#L866-L869"
+      "specLocation": "inference/_types/CommonTypes.ts#L866-L871"
     },
     {
       "kind": "interface",
@@ -154331,7 +155001,7 @@
           }
         }
       ],
-      "specLocation": "inference/_types/CommonTypes.ts#L875-L896"
+      "specLocation": "inference/_types/CommonTypes.ts#L877-L898"
     },
     {
       "kind": "enum",
@@ -154344,7 +155014,7 @@
         "name": "HuggingFaceServiceType",
         "namespace": "inference._types"
       },
-      "specLocation": "inference/_types/CommonTypes.ts#L902-L904"
+      "specLocation": "inference/_types/CommonTypes.ts#L904-L906"
     },
     {
       "kind": "enum",
@@ -154357,7 +155027,7 @@
         "name": "HuggingFaceTaskType",
         "namespace": "inference._types"
       },
-      "specLocation": "inference/_types/CommonTypes.ts#L898-L900"
+      "specLocation": "inference/_types/CommonTypes.ts#L900-L902"
     },
     {
       "kind": "interface",
@@ -154760,7 +155430,7 @@
           }
         }
       ],
-      "specLocation": "inference/_types/CommonTypes.ts#L906-L935"
+      "specLocation": "inference/_types/CommonTypes.ts#L908-L937"
     },
     {
       "kind": "enum",
@@ -154773,7 +155443,7 @@
         "name": "JinaAIServiceType",
         "namespace": "inference._types"
       },
-      "specLocation": "inference/_types/CommonTypes.ts#L965-L967"
+      "specLocation": "inference/_types/CommonTypes.ts#L967-L969"
     },
     {
       "kind": "enum",
@@ -154792,7 +155462,7 @@
         "name": "JinaAISimilarityType",
         "namespace": "inference._types"
       },
-      "specLocation": "inference/_types/CommonTypes.ts#L969-L973"
+      "specLocation": "inference/_types/CommonTypes.ts#L971-L975"
     },
     {
       "kind": "interface",
@@ -154838,7 +155508,7 @@
           }
         }
       ],
-      "specLocation": "inference/_types/CommonTypes.ts#L937-L958"
+      "specLocation": "inference/_types/CommonTypes.ts#L939-L960"
     },
     {
       "kind": "enum",
@@ -154854,7 +155524,7 @@
         "name": "JinaAITaskType",
         "namespace": "inference._types"
       },
-      "specLocation": "inference/_types/CommonTypes.ts#L960-L963"
+      "specLocation": "inference/_types/CommonTypes.ts#L962-L965"
     },
     {
       "kind": "enum",
@@ -154876,7 +155546,7 @@
         "name": "JinaAITextEmbeddingTask",
         "namespace": "inference._types"
       },
-      "specLocation": "inference/_types/CommonTypes.ts#L975-L980"
+      "specLocation": "inference/_types/CommonTypes.ts#L977-L982"
     },
     {
       "kind": "interface",
@@ -155034,7 +155704,7 @@
           }
         }
       ],
-      "specLocation": "inference/_types/CommonTypes.ts#L982-L1009"
+      "specLocation": "inference/_types/CommonTypes.ts#L984-L1011"
     },
     {
       "kind": "enum",
@@ -155047,7 +155717,7 @@
         "name": "MistralServiceType",
         "namespace": "inference._types"
       },
-      "specLocation": "inference/_types/CommonTypes.ts#L1015-L1017"
+      "specLocation": "inference/_types/CommonTypes.ts#L1017-L1019"
     },
     {
       "kind": "enum",
@@ -155060,7 +155730,7 @@
         "name": "MistralTaskType",
         "namespace": "inference._types"
       },
-      "specLocation": "inference/_types/CommonTypes.ts#L1011-L1013"
+      "specLocation": "inference/_types/CommonTypes.ts#L1013-L1015"
     },
     {
       "kind": "interface",
@@ -155147,7 +155817,7 @@
           }
         }
       ],
-      "specLocation": "inference/_types/CommonTypes.ts#L1019-L1061"
+      "specLocation": "inference/_types/CommonTypes.ts#L1021-L1063"
     },
     {
       "kind": "enum",
@@ -155160,7 +155830,7 @@
         "name": "OpenAIServiceType",
         "namespace": "inference._types"
       },
-      "specLocation": "inference/_types/CommonTypes.ts#L1077-L1079"
+      "specLocation": "inference/_types/CommonTypes.ts#L1079-L1081"
     },
     {
       "kind": "interface",
@@ -155182,7 +155852,7 @@
           }
         }
       ],
-      "specLocation": "inference/_types/CommonTypes.ts#L1063-L1069"
+      "specLocation": "inference/_types/CommonTypes.ts#L1065-L1071"
     },
     {
       "kind": "enum",
@@ -155201,7 +155871,7 @@
         "name": "OpenAITaskType",
         "namespace": "inference._types"
       },
-      "specLocation": "inference/_types/CommonTypes.ts#L1071-L1075"
+      "specLocation": "inference/_types/CommonTypes.ts#L1073-L1077"
     },
     {
       "kind": "interface",
@@ -155811,7 +156481,7 @@
           }
         }
       ],
-      "specLocation": "inference/_types/CommonTypes.ts#L1081-L1112"
+      "specLocation": "inference/_types/CommonTypes.ts#L1083-L1114"
     },
     {
       "kind": "enum",
@@ -155824,7 +156494,7 @@
         "name": "VoyageAIServiceType",
         "namespace": "inference._types"
       },
-      "specLocation": "inference/_types/CommonTypes.ts#L1145-L1147"
+      "specLocation": "inference/_types/CommonTypes.ts#L1147-L1149"
     },
     {
       "kind": "interface",
@@ -155884,7 +156554,7 @@
           }
         }
       ],
-      "specLocation": "inference/_types/CommonTypes.ts#L1114-L1138"
+      "specLocation": "inference/_types/CommonTypes.ts#L1116-L1140"
     },
     {
       "kind": "enum",
@@ -155900,7 +156570,7 @@
         "name": "VoyageAITaskType",
         "namespace": "inference._types"
       },
-      "specLocation": "inference/_types/CommonTypes.ts#L1140-L1143"
+      "specLocation": "inference/_types/CommonTypes.ts#L1142-L1145"
     },
     {
       "kind": "interface",
@@ -155988,7 +156658,7 @@
           }
         }
       ],
-      "specLocation": "inference/_types/CommonTypes.ts#L1149-L1186"
+      "specLocation": "inference/_types/CommonTypes.ts#L1151-L1188"
     },
     {
       "kind": "enum",
@@ -156001,7 +156671,7 @@
         "name": "WatsonxServiceType",
         "namespace": "inference._types"
       },
-      "specLocation": "inference/_types/CommonTypes.ts#L1192-L1194"
+      "specLocation": "inference/_types/CommonTypes.ts#L1194-L1196"
     },
     {
       "kind": "enum",
@@ -156014,7 +156684,7 @@
         "name": "WatsonxTaskType",
         "namespace": "inference._types"
       },
-      "specLocation": "inference/_types/CommonTypes.ts#L1188-L1190"
+      "specLocation": "inference/_types/CommonTypes.ts#L1190-L1192"
     },
     {
       "kind": "request",
@@ -156032,7 +156702,7 @@
           }
         }
       },
-      "description": "Perform chat completion inference\n\nThe chat completion inference API enables real-time responses for chat completion tasks by delivering answers incrementally, reducing response times during computation. \nIt only works with the `chat_completion` task type for `openai` and `elastic` inference services.\n\nIMPORTANT: The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Azure, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face.\nFor built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models. However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs.\n\nNOTE: The `chat_completion` task type is only available within the _stream API and only supports streaming.\nThe Chat completion inference API and the Stream inference API differ in their response structure and capabilities.\nThe Chat completion inference API provides more comprehensive customization options through more fields and function calling support.\nIf you use the `openai` service or the `elastic` service, use the Chat completion inference API.",
+      "description": "Perform chat completion inference\n\nThe chat completion inference API enables real-time responses for chat completion tasks by delivering answers incrementally, reducing response times during computation. \nIt only works with the `chat_completion` task type for `openai`, `elastic` and `googlevertexai` inference services.\n\nIMPORTANT: The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Azure, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face.\nFor built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models. However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs.\n\nNOTE: The `chat_completion` task type is only available within the _stream API and only supports streaming.\nThe Chat completion inference API and the Stream inference API differ in their response structure and capabilities.\nThe Chat completion inference API provides more comprehensive customization options through more fields and function calling support.\nIf you use the `openai` service or the `elastic` service, use the Chat completion inference API.",
       "examples": {
         "PostChatCompletionRequestExample1": {
           "description": "Run `POST _inference/chat_completion/openai-completion/_stream` to perform a chat completion on the example question with streaming.",
